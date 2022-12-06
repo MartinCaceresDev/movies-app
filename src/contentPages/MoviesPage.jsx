@@ -17,7 +17,7 @@ export function MoviesPage() {
 			<Featured page={page} />
 			
 			{ customListsTitles.map((title)=> <List key={title.name} page={page} listTitle={title} />) }
-			{ fetchedMovieGenres && fetchedMovieGenres.map((title)=> <List key={title.name} page={page} listTitle={title} />) }
+			{ fetchedMovieGenres && fetchedMovieGenres.map((title)=> <List key={title.name} page={page} listTitle={title} />)}
 
 		</>
 	);

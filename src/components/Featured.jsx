@@ -32,9 +32,9 @@ export function Featured({ page }) {
 
 	if (pending){
 		return(
-			<Container>
+			<Loading>
 				<Spinner color='red.500' size= 'lg' />
-			</Container>
+			</Loading>
 		) 
 	}
 
@@ -78,8 +78,8 @@ export function Featured({ page }) {
 
 // STYLES
 
+
 const Container = styled.section`
-	height: 105vh;
 	position: relative;
 	background: ${({image})=>`linear-gradient(to bottom, transparent 70%,#0b0b0b30 80%, #0b0b0b), url(${image})`};
 	background-size: cover;
@@ -87,66 +87,81 @@ const Container = styled.section`
 	background-position: center;
 	margin-bottom: -100px;
 	display: flex;
-	justify-content: center;
+	justify-content: start;
 	align-items: center;
-	@media (max-height: 458px) {
-		margin-bottom: -15vh;
+	@media (max-height: 640px) {
+		margin-bottom: -4rem;
 	}
-	@media (max-height: 375px) {
-		margin-bottom: -10vh;
+	@media (max-height: 399px) {
+		margin-bottom: -2rem;
 	}
-	@media (max-height: 320px) {
-		margin-bottom: 0;
+	@media (max-width: 399px){
+		justify-content: center;
+		margin-bottom: -2.7rem;
 	}
 `;
 
+const Loading = styled(Container)`
+	justify-content: center;
+	background: #0b0b0b;
+	height: 100vh;
+	width: 100%;
+`;
+
 const Info = styled.div`
-	width: ${({ infoOpen })=>infoOpen ? '43%' : '35%'};
-	position: absolute;
-	left: 50px;
+	width: ${({ infoOpen })=> infoOpen ? '43%' : '35%'};
+	max-width: 600px;
+	position: relative;
+	left: 4rem;
 	color: white;
 	display: flex;
 	flex-direction: column;
-	background: radial-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0));
+	background: radial-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.4));
 	padding: 2rem;
-	border-radius: 10%;
+	border-radius: 1.4rem;
+	font-size: 0.9rem;
+	margin-top: 20vh;
+	margin-bottom: 22vh;
+
 	@media (max-width: 992px){
 		width: 60%;
 	}
 	@media (max-width: 699px) {
-		width: 70%;
+		width: 85%;
 		left: 30px;
 	}
 	@media (max-width: 399px) {
-		width: 90%;
-		padding: 0;
-		left: 1rem;
+		width: 98%;
+		padding: 1rem;
+		position: initial;
+		left: initial;
+		align-items: center;
+		padding: 2rem 0.8rem;
+		margin-top: 17vh;
+		margin-bottom: 22vh;
 	}
-	@media (max-height: 375px) {
-		width: 80%;
-		bottom: 17vh;
-		img {
-			width: 50%;
-		}
+	@media (max-height: 399px) {
+		left: 10px;
+		width: 100%;
+		padding-bottom: 0.5rem;
+		margin-top: 50px;
+		margin-bottom: 100px;
 	}
-	@media (max-height: 320px) {
-		bottom: 5vh;
-	}
-	@media (max-height: 280px) {
-		width: 90%;
+	@media (max-height: 280px){
+		transform: scale(0.9);
 	}
 `;
 
 const Logo = styled.img`
-	width: 350px;
+	max-width: 320px;
 	@media (max-width: 699px) {
-		width: 100%;
+		width: 75%;
 	}
 	@media (max-height: 458px) {
 		width: 70%;
 	}
-	@media (max-height: 375px) {
-		width: 50%;
+	@media (max-height: 399px) {
+		width: 40vh;
 	}
 `;
 
@@ -154,6 +169,12 @@ const Description = styled.p`
 	margin: 20px 0px;
 	font-size: 1rem;
 	line-height: 1.2;
+	@media (max-height: 320px){
+		font-size: 0.8rem;
+	}
+	@media (max-width: 399px){
+		font-size: 0.8rem;
+	}
 `;
 
 const Buttons = styled.div`
@@ -164,11 +185,14 @@ const Buttons = styled.div`
 	@media (max-height: 375px) {
 		transform: scale(0.7);
 	}
+	@media (max-width: 399px){
+		justify-content: center;
+	}
 `;
 
 const ButtonPlay = styled.button`
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+	padding: 0.5rem 0;
+	width: 7rem;
 	border: none;
 	border-radius: 5px;
 	display: flex;
@@ -188,11 +212,15 @@ const ButtonPlay = styled.button`
 	p {
 		margin-left: 0.4rem;
 	}
+	@media (max-width: 285px){
+		transform: scale(0.8)
+	}
 `;
 
 const ButtonInfo = styled(ButtonPlay)`
 	background-color: gray;
 	color: white;
+	margin-right: 0;
 	svg {
 		width: 1.2em;
 		height: 1.2em;

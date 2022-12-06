@@ -140,12 +140,13 @@ export const LoginForm = () => {
 const Form = styled.form`
   width: 400px;
   padding: 3.5rem;
-  border-radius: 5px;
+  border-radius: 0.7rem;
   background-color: #000000c5;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   h1 {
+    font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 2rem;
     @media (max-width: 400px){
@@ -154,7 +155,10 @@ const Form = styled.form`
   }
   @media (max-width: 400px){
     width: 100%;
-    padding: 3.4rem 0.7rem;
+    padding: 3.4rem 1rem;
+  }
+  @media (max-width: 399px) and (max-height: 500px){
+    padding-top: 2rem;
   }
 `;
 
@@ -218,6 +222,10 @@ const Button = styled.button`
   cursor: pointer;
   margin: 1.5rem 0 3rem;
   padding: 0.8rem;
+  @media (max-width: 399px) and (max-height: 500px){
+    margin: 1.5rem 0 1.5rem;
+  }
+
 `;
 
 const Span = styled.span`
@@ -230,6 +238,9 @@ const Span = styled.span`
     &:hover {
       text-decoration: underline;
     }
+  }
+  @media (max-width: 399px) and (max-height: 500px){
+    margin-bottom: 1rem;
   }
 `;
 

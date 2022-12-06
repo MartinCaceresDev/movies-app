@@ -32,9 +32,16 @@ const Container = styled.div`
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${netflixBackground});
   background-size: cover;
   position: relative;
+  overflow-y: hidden;
 `;
 
-const Top = styled.div``;
+const Top = styled.div`
+  @media (max-width: 400px){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 const Wrapper = styled.div`
   padding: 20px 50px;
@@ -62,4 +69,7 @@ const Content = styled.div`
   align-items: center;
   justify-content: center;
   color: white;
+  @media (max-width: 399px){
+    margin-top: 4rem;;
+  }
 `;

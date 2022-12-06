@@ -51,7 +51,7 @@ export const List = ({ listTitle, page })=> {
 			const items = itemsList.map(item=>{
 				let data = {
 					...item, 
-					genres:item.genres?.length ? item.genres[0].name : null,
+					genres: item.genres?.length ? item.genres[0].name : null,
 					videos: item.videos?.results?.find(video=>video.type === 'Trailer')?.key
 				}
 				return <ListItem key={item.id} page={page} {...data} />
@@ -66,11 +66,11 @@ export const List = ({ listTitle, page })=> {
 
 	return (
 		<>
-			{ (!itemsList?.length & !pending) && (
-					<EmptyContainer>
+			{ (!itemsList?.length & !pending) 
+				? <EmptyContainer>
 						<EmptyListTitle>Your list is empty.</EmptyListTitle>
 					</EmptyContainer>
-				)
+				: <></>
 			}
 
 			{ (!itemsList?.length && pending) && <LoadingList />}
@@ -79,7 +79,6 @@ export const List = ({ listTitle, page })=> {
 					<Container page={page}>
 						<ListTitle>{listTitle.name}</ListTitle>
 						<Wrapper page={page}>
-
 							<ArrowBackIosNewOutlinedIcon
 								className="sliderArrow left"
 								onClick={() => arrowClick('left')}
@@ -107,11 +106,11 @@ export const List = ({ listTitle, page })=> {
 
 						</Wrapper>
 					</Container>
- 				)
- 			}
+				)
+			}
 		</>
 	)
- }
+}
 
 
 // STYLES
@@ -133,10 +132,14 @@ const ListTitle = styled.h3`
 	margin-left: 3vw;
 	margin-bottom: 10px;
 	position: relative;
+	@media (max-width: 399px){
+		font-size: 1rem;
+	}
 `;
 
 const EmptyListTitle = styled(ListTitle)`
 	text-align: center;
+	margin-left: 0;
 `;
 
 const Wrapper = styled.div`
@@ -167,7 +170,7 @@ const Wrapper = styled.div`
 			width: 30px;
 		}
 	}
-	`;
+`;
 
 const ListContainer = styled.div`
 	margin-left: 3vw;

@@ -107,10 +107,10 @@ const Container = styled.header`
 	justify-content: space-between;
 	height: 70px;
 	@media (max-width: 480px) {
-		padding: 0 1vw 0 4vw;
+		padding: 0 3vw 0 4vw;
 	}
-	@media (max-height: 255px) {
-		display: none;
+	@media (max-height: 250px){
+		height: 45px;
 	}
 `;
 

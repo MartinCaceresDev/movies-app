@@ -144,6 +144,7 @@ const InputDiv = styled.div`
 	@media (max-width: 640px){
 		width: 80%;
 		margin-left: 0;
+		max-width: 300px;
 	}
 	label {
 		position: absolute;
@@ -206,5 +207,6 @@ const RegisterButton = styled.button`
 		width: 80%;
 		font-size: 1.6rem;
 		justify-content: center;
+		max-width: 300px;
 	}
 `;

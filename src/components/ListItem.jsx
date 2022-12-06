@@ -186,8 +186,18 @@ const HoverContainer = styled.div`
 	background-color: #0b0b0b;
 	overflow: hidden;
 	color: white;
-	z-index: 10;
+	z-index: 100;
 	cursor: auto;
+	@media (max-width: 740px){
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 70px;
+		bottom: initial;
+	}
+	@media (max-width: 399px){
+		width: 90vw;
+	}
 `;
 
 const ImageSection = styled.article`
@@ -238,6 +248,8 @@ const Description = styled.div`
 	font-size: 13px;
 	margin-bottom: 10px;
 	line-height: 1.3;
+	user-select: none;
+	pointer-events: none;
 `;
 
 const Genre = styled.div`

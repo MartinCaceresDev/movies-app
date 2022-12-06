@@ -25,7 +25,7 @@ const EmptyListTitle = styled.h3`
 	color: white;
 	font-size: 20px;
 	font-weight: 500;
-	margin-left: 3vw;
+	margin-left: 0;
 	margin-bottom: 10px;
 	position: relative;
 	text-align: center;

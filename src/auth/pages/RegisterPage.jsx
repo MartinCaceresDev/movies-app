@@ -83,10 +83,11 @@ const Content = styled.div`
 	justify-content: center;
 	color: white;
 	text-align: center;
+	padding-top: 2rem;
 `;
 
 const H1 = styled.h1`
-	font-size: 50px;
+	font-size: 3rem;
 	min-width: 40%;
 	line-height: 1.2;
 	@media (max-width: 640px){
@@ -101,6 +102,7 @@ const H1 = styled.h1`
 const H2 = styled.h2`
 	font-weight: 400;
 	margin: 20px;
+	font-size: 1.2rem;
 	@media (max-width: 399px){
 		margin: 14px;
 	}
@@ -108,6 +110,7 @@ const H2 = styled.h2`
 
 const P = styled.p`
 	font-size: 20px;
+	margin-top: 20px;
 	@media (max-width: 399px){
 		font-size: 16px;
 		margin: 0 10px;

@@ -6,4 +6,12 @@
 
 html {
   font-family: sans-serif;
+  width: 100vw;
+  overflow-x: hidden;
 }
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+

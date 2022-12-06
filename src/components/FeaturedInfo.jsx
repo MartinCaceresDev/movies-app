@@ -145,6 +145,7 @@ const Buttons = styled.div`
 const ButtonPlay = styled.button`
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
+  width: 7rem;
 	border: none;
 	border-radius: 5px;
 	display: flex;
@@ -154,6 +155,7 @@ const ButtonPlay = styled.button`
 	font-weight: 500;
 	margin-right: 0.7rem;
 	cursor: pointer;
+  user-select: none;
 	background-color: white;
 	color: #0b0b0b;
 	flex-basis: 7rem;
