@@ -10,60 +10,60 @@ const imgURL = 'https://image.tmdb.org/t/p/original';
 const logoURL = 'https://image.tmdb.org/t/p/w500';
 
 export function Featured({ page }) {
-	const [ logo, setLogo ] = useState('');
-	const [ video, setVideo ] = useState('');
-	const [ trailerOpen, setTrailerOpen ] = useState(false);
-	const [ infoOpen, setInfoOpen ] = useState(false);
+	const [logo, setLogo] = useState('');
+	const [video, setVideo] = useState('');
+	const [trailerOpen, setTrailerOpen] = useState(false);
+	const [infoOpen, setInfoOpen] = useState(false);
 	const [{ fetchedData, pending }, setFetchedData] = useFetchContents();
 
-	useEffect(()=>{
-		setFetchedData(page, {name: 'Featured'});
+	useEffect(() => {
+		setFetchedData(page, { name: 'Featured' });
 		setInfoOpen(false);
-	},[page]);
-	
-	useEffect(()=>{
-		if (fetchedData && fetchedData[0]?.images?.logos[0]?.file_path){
+	}, [page]);
+
+	useEffect(() => {
+		if (fetchedData && fetchedData[0]?.images?.logos[0]?.file_path) {
 			setLogo(`${logoURL}${fetchedData[0]?.images?.logos[0]?.file_path}`);
 		}
-		if (fetchedData && fetchedData[0]?.videos?.results){
+		if (fetchedData && fetchedData[0]?.videos?.results) {
 			setVideo(fetchedData[0].videos.results.find(({ type }) => type === 'Trailer')?.key);
 		}
-	},[fetchedData]);
+	}, [fetchedData]);
 
-	if (pending){
-		return(
+	if (pending) {
+		return (
 			<Loading>
-				<Spinner color='red.500' size= 'lg' />
+				<Spinner color='red.500' size='lg' />
 			</Loading>
-		) 
+		)
 	}
 
 	return (
-		<Container image={fetchedData ? `${imgURL}${fetchedData[0]?.backdrop_path}` : '' }>
+		<Container image={fetchedData ? `${imgURL}${fetchedData[0]?.backdrop_path}` : ''}>
 			<Info infoOpen={infoOpen} >
 				<Logo src={logo} alt='Logo' />
 
 				{
-					!infoOpen  
+					!infoOpen
 						? <>
-								<Description>
-									{fetchedData && fetchedData[0]?.overview}
-								</Description>
+							<Description>
+								{fetchedData && fetchedData[0]?.overview}
+							</Description>
 
-								<Buttons>
+							<Buttons>
 
-									<ButtonPlay onClick={()=>setTrailerOpen(true)}>
-										<PlayArrowIcon />
-										<p>Play</p>
-									</ButtonPlay>
+								<ButtonPlay onClick={() => setTrailerOpen(true)}>
+									<PlayArrowIcon />
+									<p>Play</p>
+								</ButtonPlay>
 
-									<ButtonInfo onClick={()=>setInfoOpen(true)}>
-										<InfoOutlinedIcon />
-										<p>Info</p>
-									</ButtonInfo>
+								<ButtonInfo onClick={() => setInfoOpen(true)}>
+									<InfoOutlinedIcon />
+									<p>Info</p>
+								</ButtonInfo>
 
-								</Buttons>
-							</>
+							</Buttons>
+						</>
 						: <FeaturedInfo video={video} fetchedData={fetchedData} page={page} />
 				}
 
@@ -81,7 +81,7 @@ export function Featured({ page }) {
 
 const Container = styled.section`
 	position: relative;
-	background: ${({image})=>`linear-gradient(to bottom, transparent 70%,#0b0b0b30 80%, #0b0b0b), url(${image})`};
+	background: ${({ image }) => `linear-gradient(to bottom, transparent 70%,#0b0b0b30 80%, #0b0b0b), url(${image})`};
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -98,6 +98,8 @@ const Container = styled.section`
 	@media (max-width: 399px){
 		justify-content: center;
 		margin-bottom: -2.7rem;
+		padding-left: 3px;
+		padding-right: 3px;
 	}
 `;
 
@@ -109,7 +111,7 @@ const Loading = styled(Container)`
 `;
 
 const Info = styled.div`
-	width: ${({ infoOpen })=> infoOpen ? '43%' : '35%'};
+	width: ${({ infoOpen }) => infoOpen ? '43%' : '35%'};
 	max-width: 600px;
 	position: relative;
 	left: 4rem;

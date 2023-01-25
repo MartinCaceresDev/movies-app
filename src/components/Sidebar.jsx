@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AiOutlineClose } from 'react-icons/ai';
-import  { menuLinks } from '../utils';
+import { menuLinks } from '../utils';
 
 export const Sidebar = ({ onMenuClick, menuOpen, handleMenuPage }) => {
   return (
@@ -11,10 +11,10 @@ export const Sidebar = ({ onMenuClick, menuOpen, handleMenuPage }) => {
           <AiOutlineClose id='closeIcon' onClick={onMenuClick} />
         </CloseContainer>
 
-        {menuLinks.map(link=>(
+        {menuLinks.map(link => (
           <Link key={link} onClick={handleMenuPage}>{link}</Link>
         ))}
-        
+
       </SidebarContent>
     </SidebarContainer>
   )
@@ -31,13 +31,10 @@ const SidebarContainer = styled.div`
   position: fixed;
   top: 0;
   z-index: 200;
-  right: ${({menuOpen})=> menuOpen ? `0` : `-100%` };
+  right: ${({ menuOpen }) => menuOpen ? `0` : `-100%`};
 `;
 
 const SidebarContent = styled.div`
-  position: fixed;
-  top: 0;
-  right: ${({menuOpen})=> menuOpen ? `0` : `-100%` };
   height: 100vh;
   width: 18rem;
   background-color: #0b0b0b;
