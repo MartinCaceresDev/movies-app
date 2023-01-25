@@ -9,7 +9,7 @@ import { onArrowClick, checkViewWidth, getStorageMyList } from '../utils';
 import { GetContext } from '../context/AppContextContainer';
 
 
-export const List = ({ listTitle, page })=> {
+export const List = ({ listTitle, page }) => {
 
 	const [slideNumber, setSlideNumber] = useState(0);
 	const [viewWidth, setViewWidth] = useState(window.innerWidth);
@@ -17,22 +17,22 @@ export const List = ({ listTitle, page })=> {
 	const listRef = useRef();
 	const leftArrow = useRef();
 	const rightArrow = useRef();
-	
-	const [ {fetchedData: itemsList, pending}, setFetchedData ] = useFetchContents();
+
+	const [{ fetchedData: itemsList, pending }, setFetchedData] = useFetchContents();
 	const { storageUpdated } = GetContext();
 
-	const arrowClick = (direction)=>{
+	const arrowClick = (direction) => {
 		onArrowClick(direction, {
-			leftArrow, 
-			rightArrow, 
-			listRef, 
-			slideNumber, 
-			viewWidth, 
-			setSlideNumber, 
+			leftArrow,
+			rightArrow,
+			listRef,
+			slideNumber,
+			viewWidth,
+			setSlideNumber,
 			maxSlideNumber
 		});
 	}
-	
+
 	useEffect(() => {
 		const updateViewWidth = () => {
 			setViewWidth(window.innerWidth);
@@ -41,72 +41,74 @@ export const List = ({ listTitle, page })=> {
 		checkViewWidth(viewWidth, setMaxSlideNumber);
 		return () => window.removeEventListener('resize', updateViewWidth);
 	});
-	
-	useEffect(()=>{
-		getStorageMyList(listTitle, page, setFetchedData);
-	},[storageUpdated]);
 
-	const itemsToRender = ()=> {
-		if (itemsList){
-			const items = itemsList.map(item=>{
+	useEffect(() => {
+		getStorageMyList(listTitle, page, setFetchedData);
+	}, [storageUpdated]);
+
+	const itemsToRender = () => {
+		if (itemsList) {
+			const items = itemsList.map(item => {
 				let data = {
-					...item, 
+					...item,
 					genres: item.genres?.length ? item.genres[0].name : null,
-					videos: item.videos?.results?.find(video=>video.type === 'Trailer')?.key
+					videos: item.videos?.results?.find(video => video.type === 'Trailer')?.key
 				}
 				return <ListItem key={item.id} page={page} {...data} />
-			}) 
+			})
 			return items;
 		}
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		itemsToRender();
 	}, [itemsList])
 
 	return (
 		<>
-			{ (!itemsList?.length & !pending) 
+			{(!itemsList?.length & !pending)
 				? <EmptyContainer>
-						<EmptyListTitle>Your list is empty.</EmptyListTitle>
-					</EmptyContainer>
+					<EmptyListTitle>Your list is empty.</EmptyListTitle>
+				</EmptyContainer>
 				: <></>
 			}
 
-			{ (!itemsList?.length && pending) && <LoadingList />}
+			{(!itemsList?.length && pending) && <LoadingList />}
 
-			{ itemsList?.length && (
-					<Container page={page}>
-						<ListTitle>{listTitle.name}</ListTitle>
-						<Wrapper page={page}>
-							<ArrowBackIosNewOutlinedIcon
-								className="sliderArrow left"
-								onClick={() => arrowClick('left')}
-								ref={leftArrow}
-								style={{ display: (!slideNumber || page === 'My List' || page == 'New & Popular') && 'none' }}
-							/>
+			{itemsList?.length && (
+				<Container page={page}>
+					<ListTitle>{listTitle.name}</ListTitle>
+					<Wrapper page={page}>
+						<ArrowBackIosNewOutlinedIcon
+							className="sliderArrow left"
+							onClick={() => arrowClick('left')}
+							ref={leftArrow}
+							style={{ display: (!slideNumber || page === 'My List' || page == 'New & Popular') && 'none' }}
+						/>
 
-							<ListContainer ref={listRef} page={page} >
+						<ListContainer ref={listRef} page={page} >
 
-								{ itemsToRender() }
+							{itemsToRender()}
 
-							</ListContainer>
+						</ListContainer>
 
-							<ArrowForwardIosOutlinedIcon
-								className="sliderArrow right"
-								onClick={() => arrowClick('right')}
-								ref={rightArrow}
-								style={{ display: 
-									(slideNumber === maxSlideNumber) 
-									|| page === 'My List' 
-									|| page ==='New & Popular' 
-									? 'none' 
-									: 'block' }}
-							/>
+						<ArrowForwardIosOutlinedIcon
+							className="sliderArrow right"
+							onClick={() => arrowClick('right')}
+							ref={rightArrow}
+							style={{
+								display:
+									(slideNumber === maxSlideNumber)
+										|| page === 'My List'
+										|| page === 'New & Popular'
+										? 'none'
+										: 'block'
+							}}
+						/>
 
-						</Wrapper>
-					</Container>
-				)
+					</Wrapper>
+				</Container>
+			)
 			}
 		</>
 	)
@@ -144,7 +146,7 @@ const EmptyListTitle = styled(ListTitle)`
 
 const Wrapper = styled.div`
 	position: relative;
-	${({page})=> (page === 'My List' || page === 'New & Popular') && css`
+	${({ page }) => (page === 'My List' || page === 'New & Popular') && css`
 		width: 100%;
 	`}
 	
@@ -163,7 +165,13 @@ const Wrapper = styled.div`
 		left: 0;
 	}
 	.right {
-		right: 0;
+		right: 6px;
+	}
+
+	@media (max-width: 1036px){
+		.right {
+			right: 0;
+		}
 	}
 	@media (max-width: 399px) {
 		.sliderArrow {
@@ -180,7 +188,7 @@ const ListContainer = styled.div`
 	transition: all 1s ease;
 	position: relative;
 	
-	${({page})=> (page === 'My List' || page === 'New & Popular') && css`
+	${({ page }) => (page === 'My List' || page === 'New & Popular') && css`
 	padding-left: 3vw;
 	padding-right: 3vw;
 	margin: 0;
