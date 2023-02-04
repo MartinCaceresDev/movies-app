@@ -6,23 +6,18 @@ import { Header } from './components';
 
 
 export const ContentRoutes = () => {
-
-  return (
-    <Container>
-				
-				<Header />
-
-				<Routes>
-					<Route path='/' element={<Protected><MoviesPage /></Protected>} />
-					<Route path='tv' element={<Protected><TVPage /></Protected>} />
-					<Route path='popular' element={<Protected><PopularPage /></Protected>} />
-					<Route path='mylist' element={<Protected><MyListPage /></Protected>} />
-					<Route path='*' element={<Navigate to='/' />} />
-				</Routes>
-
-    </Container>
-
-  )
+	return (
+		<Container>
+			<Header />
+			<Routes>
+				<Route path='/' element={<Protected><MoviesPage /></Protected>} />
+				<Route path='tv' element={<Protected><TVPage /></Protected>} />
+				<Route path='popular' element={<Protected><PopularPage /></Protected>} />
+				<Route path='mylist' element={<Protected><MyListPage /></Protected>} />
+				<Route path='*' element={<Navigate to='/' />} />
+			</Routes>
+		</Container>
+	)
 }
 
 

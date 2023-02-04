@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import styled from 'styled-components';
 import { Spinner } from '@chakra-ui/react'
-import { useState, useEffect } from 'react';
 import { useFetchContents } from '../hooks/useFetchContents'
 import { Trailer, FeaturedInfo } from './';
 
@@ -77,7 +77,6 @@ export function Featured({ page }) {
 
 
 // STYLES
-
 
 const Container = styled.section`
 	position: relative;

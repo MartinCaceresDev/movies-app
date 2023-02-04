@@ -6,65 +6,60 @@ import { updateStorage } from '../utils';
 
 const AuthContext = createContext();
 
-export const useAuthContext = ()=>{
-  return useContext(AuthContext);
-};
+export const useAuthContext = () => useContext(AuthContext);
 
+export function AuthProvider({ children }) {
 
-
-export function AuthProvider({ children }){
-  
   const navigate = useNavigate();
-  
-  const [ user, setUser ] = useState({})
-  const [ loginError, setLoginError ] = useState(false);
-  const [ registerError, setRegisterError ] = useState(false);
-  
-  
-  const createUser = async (email, password)=>{
+
+  const [user, setUser] = useState({})
+  const [loginError, setLoginError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
+
+  const createUser = async (email, password) => {
     let storage = JSON.parse(localStorage.getItem('users'));
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      updateStorage(email, storage);
       setUser(auth.currentUser);
-      navigate('/', {replace: true});
-    } catch(err){
+      setRegisterError(false);
+      updateStorage(email, storage);
+      navigate('/', { replace: true });
+    } catch (err) {
       console.log(err);
       setRegisterError(err.message)
     }
   };
-  
-  const login = async (email, password)=>{
+
+  const login = async (email, password) => {
     let storage = JSON.parse(localStorage.getItem('users'));
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setUser(auth.currentUser);
       setLoginError(false);
       updateStorage(email, storage);
-      navigate('/', {replace: true})
-    } catch(err){
+      navigate('/', { replace: true })
+    } catch (err) {
+      console.log(err);
       setLoginError(err.message);
     }
   };
 
-  const logout = async ()=>{
+  const logout = async () => {
     try {
       await signOut(auth);
-      navigate('/login', {replace: true});
-    } catch(error){
+      setUser(null);
+      navigate('/login', { replace: true });
+    } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(()=>{
-    onAuthStateChanged(auth, currentUser=>{
-      setUser(currentUser);
-    })
-  },[]);
-
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => setUser(currentUser))
+  }, []);
 
   return (
-    <AuthContext.Provider value={{createUser, login, logout, user, loginError, registerError}}>
+    <AuthContext.Provider value={{ createUser, login, logout, user, loginError, registerError }}>
       {children}
     </AuthContext.Provider>
   );
