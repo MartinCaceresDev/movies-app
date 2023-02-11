@@ -1,3 +1,3 @@
 # movies-app
 
-#### Project Deploy: https://movies-app-mmc.netlify.app/
+#### Project Deploy: https://movies-mmc.vercel.app/
