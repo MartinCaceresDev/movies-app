@@ -10,8 +10,7 @@ import { AuthProvider } from './auth/AuthProvider';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
-      {/* <BrowserRouter> */}
-      <HashRouter>
+      <BrowserRouter>
         <AuthProvider>
           <AppContextContainer>
             <Routes>
@@ -19,8 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </Routes>
           </AppContextContainer>
         </AuthProvider>
-      </HashRouter>
-      {/* </BrowserRouter> */}
+      </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>
 )
