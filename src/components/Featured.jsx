@@ -80,11 +80,12 @@ export function Featured({ page }) {
 
 const Container = styled.section`
 	position: relative;
+	height: 95vh;
 	background: ${({ image }) => `linear-gradient(to bottom, transparent 70%,#0b0b0b30 80%, #0b0b0b), url(${image})`};
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-	margin-bottom: -100px;
+	margin-bottom: -6vh;
 	display: flex;
 	justify-content: start;
 	align-items: center;
@@ -154,7 +155,8 @@ const Info = styled.div`
 `;
 
 const Logo = styled.img`
-	max-width: 320px;
+	max-height: 40vh;
+	max-width: 20rem;
 	@media (max-width: 699px) {
 		width: 75%;
 	}
