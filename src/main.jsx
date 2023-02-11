@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
 import App from './App';
 import './index.css';
@@ -10,7 +10,8 @@ import { AuthProvider } from './auth/AuthProvider';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
+      <HashRouter>
         <AuthProvider>
           <AppContextContainer>
             <Routes>
@@ -18,7 +19,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </Routes>
           </AppContextContainer>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
+      {/* </BrowserRouter> */}
     </ChakraProvider>
   </React.StrictMode>
 )
