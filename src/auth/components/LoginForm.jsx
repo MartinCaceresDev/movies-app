@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useAuthContext } from '../AuthProvider';
 import { getLastEmail } from '../../utils'
 
@@ -8,69 +8,58 @@ import { getLastEmail } from '../../utils'
 export const LoginForm = () => {
 
   const { login, loginError } = useAuthContext();
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ emailMessage, setEmailMessage] = useState(false);
-  const [ passwordMessage, setPasswordMessage] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailMessage, setEmailMessage] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState(false);
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const emailLabelRef = useRef();
   const passwordLabelRef = useRef();
 
-  const invalidBorders = ()=>{
-    emailRef.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none' ;
-    passwordRef.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none' ;
+  const invalidBorders = () => {
+    emailRef.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none';
+    passwordRef.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none';
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     invalidBorders();
-  },[emailMessage, passwordMessage]);
+  }, [emailMessage, passwordMessage]);
 
-  const updateLabels = (e)=>{
-    if (email && !e){
-      emailLabelRef.current.style.transform = 'translateY(-0.7rem)';
-      emailLabelRef.current.style.font = '0.7rem bold';
-    } else if (e?.type === 'focus' && e.target.id === 'email'){
+  const updateLabels = (e) => {
+    if ((e?.type === 'blur' && e.target.id === 'email' && !email) || (e?.type === 'focus' && e.target.id === 'email')) {
+      setEmailMessage(false);
+    }
+    if ((e?.type === 'focus' && e.target.id === 'email') || (e?.type === 'focus' && e.target.id === 'password')) {
       setPasswordMessage(false);
-      emailLabelRef.current.style.transform = 'translateY(-0.7rem)';
-      emailLabelRef.current.style.font = '0.7rem bold';
-    } else if (e?.type === 'focus' && e.target.id === 'password'){
-      passwordLabelRef.current.style.transform = 'translateY(-0.7rem)';
-      passwordLabelRef.current.style.font = '0.7rem bold';
-    } else if (e?.type === 'blur' && e.target.id === 'email' && !email){
-      emailLabelRef.current.style.transform = 'translateY(0)';
-      emailLabelRef.current.style.font = 'initial';
-    } else if (e?.type === 'blur' && e.target.id === 'password' && !password){
-      passwordLabelRef.current.style.transform = 'translateY(0)';
-      passwordLabelRef.current.style.font = 'initial';
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setEmail(getLastEmail());
-  },[]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     updateLabels();
-  },[email])
+  }, [email])
 
-  const handleSubmit = async (e) =>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (email && password){
+      if (email && password) {
         setEmailMessage(false);
         setPasswordMessage(false);
         await login(email, password);
         setEmail('');
         setPassword('');
-      } else if( !email ) {
-				setEmailMessage(true);
-			} else if (!password){
-				setEmailMessage(false);
-				setPasswordMessage(true);
-			}
-    } catch(err){
+      } else if (!email) {
+        setEmailMessage(true);
+      } else if (!password) {
+        setEmailMessage(false);
+        setPasswordMessage(true);
+      }
+    } catch (err) {
       console.log(err);
     }
   };
@@ -80,41 +69,42 @@ export const LoginForm = () => {
 
       <h1>Sign In</h1>
 
-      { loginError 
-        && ( <Error>
-                <p>Sorry, we can't find an account with this email address. 
-                  Please try again or <Link to='/register'>create a new account</Link>.
-                </p>
-            </Error>
-          )
+      {loginError
+        && (<Error>
+          <p>Sorry, we can't find an account with this email address.
+            Please try again or <Link to='/register'>create a new account</Link>.
+          </p>
+        </Error>
+        )
       }
-      
-      <InputContainer>
-        <label ref={emailLabelRef} htmlFor='email'>Email</label>
-        <Input 
-          id='email' 
-          ref={emailRef} 
-          type="email" 
-          value={email} 
-          onChange={e=>setEmail(e.target.value)} 
-          onFocus={updateLabels} 
-          onBlur={updateLabels} 
+
+      <InputContainer email={email}>
+        <Input
+          id='email'
+          ref={emailRef}
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          onFocus={updateLabels}
+          onBlur={updateLabels}
+          autoComplete='off'
         />
+        <label ref={emailLabelRef} htmlFor='email'>Email</label>
 
         {emailMessage && <span>Enter a valid email address</span>}
 
       </InputContainer>
 
-      <InputContainer>
-        <label ref={passwordLabelRef} htmlFor='password'>Password</label>
-        <Input 
-          id='password' 
-          ref={passwordRef} 
-          type="password" 
-          onChange={e=>setPassword(e.target.value)} 
-          onFocus={updateLabels} 
-          onBlur={updateLabels}  
+      <InputContainer password={password}>
+        <Input
+          id='password'
+          ref={passwordRef}
+          type="password"
+          onChange={e => setPassword(e.target.value)}
+          onFocus={updateLabels}
+          onBlur={updateLabels}
         />
+        <label ref={passwordLabelRef} htmlFor='password'>Password</label>
 
         {passwordMessage && <span>Password is required!</span>}
 
@@ -166,30 +156,32 @@ const InputContainer = styled.div`
   flex-direction: column;
   width: 100%;
   margin-top: 1rem;
+
   label {
     position: absolute;
-		color: #a7a5a5;
-		top: 1rem;
-		left: 1rem;
-		transition: all 0.1s;
+    color: #a7a5a5;
+    top: 1rem;
+    left: 1rem;
+    transition: all 0.1s;
   }
+
+  input:focus + label {
+    top: 0.2rem;
+    font: 0.7rem bold;
+  }
+
+  ${({ email, password }) => (email || password) && css`
+		input:not(:placeholder-shown) + label {
+      top: 0.2rem;
+      font: 0.7rem bold;
+    }
+	`}
+
   span {
     color: #FFA00A;
     position: relative;
     left: 0.5rem;
     font-size: 0.8rem;
-  }
-`;
-
-const Error = styled.div`
-  background-color: #e87c03;
-  color: white;
-  padding: 0.8rem 1.2rem;
-  border-radius: 0.3rem;
-  margin-top: 1rem;
-  margin-bottom: 0.7rem;
-  a {
-    color: currentColor;
   }
 `;
 
@@ -207,6 +199,18 @@ const Input = styled.input`
   width: 100%;
   &:invalid {
     border-bottom: orange;
+  }
+  `;
+
+const Error = styled.div`
+  background-color: #e87c03;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  margin-bottom: 0.7rem;
+  a {
+    color: currentColor;
   }
 `;
 

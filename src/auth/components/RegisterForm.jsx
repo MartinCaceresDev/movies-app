@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import { useAuthContext } from '../AuthProvider';
 
@@ -18,19 +18,11 @@ export const RegisterForm = () => {
 	const passwordInput = useRef();
 
 	const updateLabels = (e) => {
-		if (e.type === 'focus' && e.target.id === 'email') {
+		if ((e?.type === 'blur' && e.target.id === 'email' && !email) || (e?.type === 'focus' && e.target.id === 'email')) {
+			setEmailMessage(false);
+		}
+		if ((e?.type === 'focus' && e.target.id === 'email') || (e?.type === 'focus' && e.target.id === 'password')) {
 			setPasswordMessage(false);
-			emailLabelRef.current.style.transform = 'translateY(-1rem)';
-			emailLabelRef.current.style.font = '0.8rem bold';
-		} else if (e.type === 'focus' && e.target.id === 'password') {
-			passwordLabelRef.current.style.transform = 'translateY(-1rem)';
-			passwordLabelRef.current.style.font = '0.8rem bold';
-		} else if (e.type === 'blur' && e.target.id === 'email' && !email) {
-			emailLabelRef.current.style.transform = 'translateY(0)';
-			emailLabelRef.current.style.font = 'initial';
-		} else if (e.type === 'blur' && e.target.id === 'password' && !password) {
-			passwordLabelRef.current.style.transform = 'translateY(0)';
-			passwordLabelRef.current.style.font = 'initial';
 		}
 	};
 
@@ -68,8 +60,7 @@ export const RegisterForm = () => {
 	return (
 		<Form onSubmit={handleSubmit}>
 
-			<InputDiv>
-				<label ref={emailLabelRef} htmlFor='email'>Email address</label>
+			<InputDiv email={email}>
 				<Input
 					type='email'
 					value={email}
@@ -78,7 +69,9 @@ export const RegisterForm = () => {
 					onFocus={updateLabels}
 					onBlur={updateLabels}
 					ref={emailInput}
+					autoComplete='off'
 				/>
+				<label ref={emailLabelRef} htmlFor='email'>Email address</label>
 
 				{emailMessage && <span>Enter a valid email address</span>}
 
@@ -89,8 +82,7 @@ export const RegisterForm = () => {
 
 			<br />
 
-			<InputDiv>
-				<label ref={passwordLabelRef} htmlFor='password'>Password</label>
+			<InputDiv password={password}>
 				<Input
 					type='password'
 					onChange={(e) => setPassword(e.target.value)}
@@ -100,6 +92,7 @@ export const RegisterForm = () => {
 					onBlur={updateLabels}
 					ref={passwordInput}
 				/>
+				<label ref={passwordLabelRef} htmlFor='password'>Password</label>
 
 				{passwordMessage && <span>Password is required!</span>}
 
@@ -155,6 +148,18 @@ const InputDiv = styled.div`
 			top: 0.8rem;
 		}
 	}
+
+	input:focus + label {
+    top: 0.2rem;
+    font: 0.7rem bold;
+  }
+
+	${({ email, password }) => (email || password) && css`
+		input:not(:placeholder-shown) + label {
+      top: 0.2rem;
+      font: 0.8rem bold;
+    }
+	`}
 
 	span {
 		margin-top: 0.6rem;
