@@ -51,8 +51,6 @@ export const LoginForm = () => {
         setEmailMessage(false);
         setPasswordMessage(false);
         await login(email, password);
-        setEmail('');
-        setPassword('');
       } else if (!email) {
         setEmailMessage(true);
       } else if (!password) {
@@ -71,7 +69,7 @@ export const LoginForm = () => {
 
       {loginError
         && (<Error>
-          <p>Sorry, we can't find an account with this email address.
+          <p>Sorry, email or password are incorrect.
             Please try again or <Link to='/register'>create a new account</Link>.
           </p>
         </Error>
@@ -100,6 +98,7 @@ export const LoginForm = () => {
           id='password'
           ref={passwordRef}
           type="password"
+          value={password}
           onChange={e => setPassword(e.target.value)}
           onFocus={updateLabels}
           onBlur={updateLabels}
