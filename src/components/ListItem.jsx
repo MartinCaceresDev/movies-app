@@ -1,5 +1,5 @@
 import { useState, memo, useEffect } from 'react';
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import AddIcon from '@mui/icons-material/Add';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
@@ -8,39 +8,36 @@ import { GetContext } from '../context/AppContextContainer';
 
 const imgURL = 'https://image.tmdb.org/t/p/w500';
 
-export const ListItem = memo(({ 
-	id, 
-	title, 
-	backdrop_path, 
-	overview, 
-	release_date, 
+export const ListItem = memo(({
+	id,
+	title,
+	backdrop_path,
+	overview,
+	release_date,
 	adult,
-	runtime, 
-	genres, 
-	name, 
+	runtime,
+	genres,
+	name,
 	number_of_seasons,
 	page,
 	videos
-})=> {
-	const [ isHovered, setIsHovered ] = useState(false);
-	const [ addedToList, setAddedToList ] = useState(false);
-	const [ trailerOpen, setTrailerOpen ] = useState(false);
+}) => {
+	const [isHovered, setIsHovered] = useState(false);
+	const [addedToList, setAddedToList] = useState(false);
+	const [trailerOpen, setTrailerOpen] = useState(false);
 	const image = `${imgURL}${backdrop_path}`
 	const { checkAddedToList, storageUpdated, onAddRemoveFromList } = GetContext();
 
-// CHECK IF ITEM IS ADDED
-	useEffect(()=>{
-		setAddedToList(()=>checkAddedToList(id));
-	},[storageUpdated]);
+	// CHECK IF ITEM IS ADDED
+	useEffect(() => {
+		setAddedToList(() => checkAddedToList(id));
+	}, [storageUpdated]);
 
-	const argumentsNeeded = [
-		addedToList, page, 
-		id, runtime, number_of_seasons 
-	];
-	
+	const argumentsNeeded = [addedToList, page, id, runtime, number_of_seasons];
+
 	return (
 		<>
-			{ backdrop_path && (
+			{backdrop_path && (
 				<Container
 					onMouseEnter={() => setIsHovered(true)}
 					onMouseLeave={() => setIsHovered(false)}
@@ -48,7 +45,7 @@ export const ListItem = memo(({
 				>
 					<Image src={image} alt='Movie' />
 					<Title>{title ? title : name}</Title>
-					
+
 					{isHovered && (
 						<HoverContainer>
 
@@ -58,42 +55,41 @@ export const ListItem = memo(({
 							</ImageSection>
 
 							<ItemInfo>
-								
+
 								<Icons>
-									{videos && <PlayArrowIcon className='icon' onClick={()=>setTrailerOpen(true)} />}
-									{ addedToList 
-										? <PlaylistAddCheckOutlinedIcon 
-												className='icon' 
-												onClick={()=>onAddRemoveFromList(...argumentsNeeded)} 
-											/> 
-										: <AddIcon 
-												className='icon' 
-												onClick={()=>onAddRemoveFromList(...argumentsNeeded)} 
-											/>
+									{videos && <PlayArrowIcon className='icon' onClick={() => setTrailerOpen(true)} />}
+									{addedToList
+										? <PlaylistAddCheckOutlinedIcon
+											className='icon'
+											onClick={() => onAddRemoveFromList(...argumentsNeeded)}
+										/>
+										: <AddIcon
+											className='icon'
+											onClick={() => onAddRemoveFromList(...argumentsNeeded)}
+										/>
 									}
 								</Icons>
 
-								{ trailerOpen && <Trailer video={videos} setTrailerOpen={setTrailerOpen} />}
+								{trailerOpen && <Trailer video={videos} setTrailerOpen={setTrailerOpen} />}
 
 								<ItemInfoTop>
 									<span>
-										{ runtime 
-											? `Duration: ${runtime} mins` 
-											: `Seasons: ${number_of_seasons}` 
+										{runtime
+											? `Duration: ${runtime} mins`
+											: `Seasons: ${number_of_seasons}`
 										}
 									</span>
 									<span className='limit'>{adult ? '+16' : 'PG'}</span>
-									<span>{release_date?.substring(0,4)}</span>
+									<span>{release_date?.substring(0, 4)}</span>
 								</ItemInfoTop>
 
 								<Description>{overview}</Description>
 								<Genre>{genres}</Genre>
-								
+
 							</ItemInfo>
 
 						</HoverContainer>
 					)}
-					
 				</Container>
 			)}
 		</>
@@ -135,7 +131,7 @@ const Container = styled.div`
 		width: 94vw;
 		height: 170px;
 	}
-	${({page})=> (page === 'My List' || page === 'New & Popular') && css`
+	${({ page }) => (page === 'My List' || page === 'New & Popular') && css`
 	margin-bottom: 3rem;
 	margin-right: 0;
 	@media (max-width: 1196px) {

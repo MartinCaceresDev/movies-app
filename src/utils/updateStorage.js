@@ -14,9 +14,6 @@ export const updateStorage = (email, storage) => {
 		}
 	}
 	if (!storage) {
-		localStorage.setItem(
-			'users',
-			JSON.stringify([{ email, addedList: { movies: [], tv: [] } }])
-		);
+		localStorage.setItem('users', JSON.stringify([{ email, addedList: { movies: [], tv: [] } }]));
 	}
 };

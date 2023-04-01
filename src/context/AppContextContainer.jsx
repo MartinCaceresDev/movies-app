@@ -1,24 +1,23 @@
-import { useState, createContext, useContext } from 'react'; 
+import { useState, createContext, useContext } from 'react';
 import { addToStorage, removeFromStorage } from '../utils';
 
 const Context = createContext();
-export const GetContext = ()=> useContext(Context);
+export const GetContext = () => useContext(Context);
 
 const checkAddedToList = (id) => {
-	const storage = JSON.parse(localStorage.getItem('users'));
-	if (
-		storage &&
-		(storage[storage.length - 1]?.addedList.movies.includes(id) ||
-			storage[storage.length - 1]?.addedList.tv.includes(id))
-	) {
-		return true;
-	} else return false;
+  const storage = JSON.parse(localStorage.getItem('users'));
+  if (storage
+    && (storage[storage.length - 1]?.addedList.movies.includes(id)
+      || storage[storage.length - 1]?.addedList.tv.includes(id))
+  ) {
+    return true;
+  } else return false;
 };
 
 
 export const AppContextContainer = ({ children }) => {
 
-  const [ storageUpdated, setStorageUpdated ] = useState(0);
+  const [storageUpdated, setStorageUpdated] = useState(0);
 
   /**
    * @param {Boolean} addedToList 
@@ -28,13 +27,7 @@ export const AppContextContainer = ({ children }) => {
    * @param {String} number_of_seasons - If this is truthy, indicates that content is a tv show.
    */
 
-  const onAddRemoveFromList = (
-    addedToList,
-    page,
-    id,
-    runtime,
-    number_of_seasons
-  ) => {
+  const onAddRemoveFromList = (addedToList, page, id, runtime, number_of_seasons) => {
     const storage = JSON.parse(localStorage.getItem('users'));
     if (storage && !addedToList) {
       addToStorage(page, id, runtime, number_of_seasons);
@@ -46,7 +39,7 @@ export const AppContextContainer = ({ children }) => {
 
   return (
     <Context.Provider value={{ checkAddedToList, storageUpdated, setStorageUpdated, onAddRemoveFromList }} >
-      { children }
+      {children}
     </Context.Provider>
   )
 }

@@ -34,9 +34,7 @@ export const List = ({ listTitle, page }) => {
 	}
 
 	useEffect(() => {
-		const updateViewWidth = () => {
-			setViewWidth(window.innerWidth);
-		};
+		const updateViewWidth = () => setViewWidth(window.innerWidth);
 		window.addEventListener('resize', updateViewWidth);
 		checkViewWidth(viewWidth, setMaxSlideNumber);
 		return () => window.removeEventListener('resize', updateViewWidth);
@@ -97,15 +95,13 @@ export const List = ({ listTitle, page }) => {
 							onClick={() => arrowClick('right')}
 							ref={rightArrow}
 							style={{
-								display:
-									(slideNumber === maxSlideNumber)
-										|| page === 'My List'
-										|| page === 'New & Popular'
-										? 'none'
-										: 'block'
+								display: (slideNumber === maxSlideNumber)
+									|| page === 'My List'
+									|| page === 'New & Popular'
+									? 'none'
+									: 'block'
 							}}
 						/>
-
 					</Wrapper>
 				</Container>
 			)

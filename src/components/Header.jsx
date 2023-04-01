@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import  { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -12,7 +12,7 @@ import { Sidebar } from './Sidebar';
 export function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const { logout } = useAuthContext();
-	const [ menuOpen, setMenuOpen ] = useState(false);
+	const [menuOpen, setMenuOpen] = useState(false);
 	const navigate = useNavigate();
 
 
@@ -25,25 +25,25 @@ export function Header() {
 		return () => window.removeEventListener('scroll', updateScroll);
 	});
 
-	const handleMenuPage = (e)=>{
-    switch(e.target.innerText){
-      case 'Movies':
-      case 'Home':
-        navigate('/');
-        break;
-      case 'TV Shows':
-        navigate('/tv');
-        break;
-      case 'New & Popular':
-        navigate('/popular');
-        break;
-      case 'My List':
-        navigate('/mylist');
-        break;
-      default:
-        navigate('/');
-    }
-  };
+	const handleMenuPage = (e) => {
+		switch (e.target.innerText) {
+			case 'Movies':
+			case 'Home':
+				navigate('/');
+				break;
+			case 'TV Shows':
+				navigate('/tv');
+				break;
+			case 'New & Popular':
+				navigate('/popular');
+				break;
+			case 'My List':
+				navigate('/mylist');
+				break;
+			default:
+				navigate('/');
+		}
+	};
 
 	const onMenuClick = ({ target: { id } }) => {
 		if (id === 'openIcon') setMenuOpen(true);
@@ -58,8 +58,8 @@ export function Header() {
 
 				<LeftMenu>
 					<Logo src={netflixLogo} alt="Netflix Logo" onClick={handleMenuPage} />
-					
-					{menuLinks.map(link=>(
+
+					{menuLinks.map(link => (
 						<span onClick={handleMenuPage} key={link}>{link}</span>
 					))}
 				</LeftMenu>
@@ -84,11 +84,13 @@ export function Header() {
 				</HamburgerMenu>
 
 			</Container>
-			
+
 			<Sidebar onMenuClick={onMenuClick} menuOpen={menuOpen} handleMenuPage={handleMenuPage} />
 		</>
 	);
 }
+
+// STYLES
 
 const Container = styled.header`
 	width: 100%;

@@ -31,7 +31,6 @@ export const LoginForm = () => {
     if (email && !e){
       emailLabelRef.current.style.transform = 'translateY(-0.7rem)';
       emailLabelRef.current.style.font = '0.7rem bold';
-      return;
     } else if (e?.type === 'focus' && e.target.id === 'email'){
       setPasswordMessage(false);
       emailLabelRef.current.style.transform = 'translateY(-0.7rem)';
@@ -128,7 +127,6 @@ export const LoginForm = () => {
       <Captcha>
         This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href='#'>Learn more</a>.
       </Captcha>
-
     </Form>
   )
 }
@@ -225,7 +223,6 @@ const Button = styled.button`
   @media (max-width: 399px) and (max-height: 500px){
     margin: 1.5rem 0 1.5rem;
   }
-
 `;
 
 const Span = styled.span`

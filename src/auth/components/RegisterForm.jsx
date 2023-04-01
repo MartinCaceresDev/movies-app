@@ -1,49 +1,49 @@
-import React, {useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import { useAuthContext } from '../AuthProvider';
 
 export const RegisterForm = () => {
 
-  const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
-	const [ emailMessage, setEmailMessage ] = useState(false);
-	const [ passwordMessage, setPasswordMessage ] = useState(false);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [emailMessage, setEmailMessage] = useState(false);
+	const [passwordMessage, setPasswordMessage] = useState(false);
 
 	const { createUser, registerError } = useAuthContext();
 
 	const emailLabelRef = useRef();
 	const passwordLabelRef = useRef();
 	const emailInput = useRef();
-	const passwordInput = useRef();	
+	const passwordInput = useRef();
 
-	const updateLabels = (e)=>{
-		if (e.type === 'focus' && e.target.id === 'email'){
+	const updateLabels = (e) => {
+		if (e.type === 'focus' && e.target.id === 'email') {
 			setPasswordMessage(false);
 			emailLabelRef.current.style.transform = 'translateY(-1rem)';
 			emailLabelRef.current.style.font = '0.8rem bold';
-		} else if (e.type === 'focus' && e.target.id === 'password'){
+		} else if (e.type === 'focus' && e.target.id === 'password') {
 			passwordLabelRef.current.style.transform = 'translateY(-1rem)';
 			passwordLabelRef.current.style.font = '0.8rem bold';
-		} else if (e.type === 'blur' && e.target.id === 'email' && !email){
+		} else if (e.type === 'blur' && e.target.id === 'email' && !email) {
 			emailLabelRef.current.style.transform = 'translateY(0)';
 			emailLabelRef.current.style.font = 'initial';
-		} else if (e.type === 'blur' && e.target.id === 'password' && !password){
+		} else if (e.type === 'blur' && e.target.id === 'password' && !password) {
 			passwordLabelRef.current.style.transform = 'translateY(0)';
 			passwordLabelRef.current.style.font = 'initial';
 		}
 	};
 
-	const invalidBorders = ()=>{
+	const invalidBorders = () => {
 		emailInput.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none';
 		passwordInput.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none';
 	}
 
-	useEffect(()=>{
+	useEffect(() => {
 		invalidBorders();
-	},[emailMessage, passwordMessage]);
+	}, [emailMessage, passwordMessage]);
 
-  const handleSubmit = async (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			if (email && password) {
@@ -52,9 +52,9 @@ export const RegisterForm = () => {
 				await createUser(email, password);
 				setEmail('');
 				setPassword('');
-			} else if( !email ) {
+			} else if (!email) {
 				setEmailMessage(true);
-			} else if (!password){
+			} else if (!password) {
 				setEmailMessage(false);
 				setPasswordMessage(true);
 			}
@@ -65,52 +65,51 @@ export const RegisterForm = () => {
 		}
 	};
 
-  return (
-    <Form onSubmit={handleSubmit}>
+	return (
+		<Form onSubmit={handleSubmit}>
 
-      <InputDiv>
-        <label ref={emailLabelRef} htmlFor='email'>Email address</label>
-        <Input
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          id='email'
-          onFocus={updateLabels}
-          onBlur={updateLabels}
-          ref={emailInput}
-          />
+			<InputDiv>
+				<label ref={emailLabelRef} htmlFor='email'>Email address</label>
+				<Input
+					type='email'
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+					id='email'
+					onFocus={updateLabels}
+					onBlur={updateLabels}
+					ref={emailInput}
+				/>
 
-        {emailMessage && <span>Enter a valid email address</span>}
+				{emailMessage && <span>Enter a valid email address</span>}
 
-        {registerError === 'Firebase: Error (auth/email-already-in-use).' 
-            && <span>Email is already registered</span>}
+				{registerError === 'Firebase: Error (auth/email-already-in-use).'
+					&& <span>Email is already registered</span>}
 
-      </InputDiv>
+			</InputDiv>
 
-      <br />
+			<br />
 
-      <InputDiv>
-        <label ref={passwordLabelRef} htmlFor='password'>Password</label>
-        <Input
-          type='password'
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          id='password'
-          onFocus={updateLabels}
-          onBlur={updateLabels}
-          ref={passwordInput}
-        />
+			<InputDiv>
+				<label ref={passwordLabelRef} htmlFor='password'>Password</label>
+				<Input
+					type='password'
+					onChange={(e) => setPassword(e.target.value)}
+					value={password}
+					id='password'
+					onFocus={updateLabels}
+					onBlur={updateLabels}
+					ref={passwordInput}
+				/>
 
-        {passwordMessage && <span>Password is required!</span>}
+				{passwordMessage && <span>Password is required!</span>}
 
-      </InputDiv>
+			</InputDiv>
 
-      <RegisterButton type='submit'>
-				<span>Get Started</span><ArrowForwardIosOutlinedIcon/>
+			<RegisterButton type='submit'>
+				<span>Get Started</span><ArrowForwardIosOutlinedIcon />
 			</RegisterButton>
-
-    </Form>
-  )
+		</Form>
+	)
 }
 
 
