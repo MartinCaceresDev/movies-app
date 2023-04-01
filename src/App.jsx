@@ -3,6 +3,7 @@ import { LoginPage } from './auth/pages/LoginPage';
 import { RegisterPage } from './auth/pages/RegisterPage';
 import { ContentRoutes } from './ContentRoutes';
 
+
 export default function App() {
 	return (
 		<Routes>

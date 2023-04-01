@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import { Protected } from './auth/components/Protected';
 import { MoviesPage, MyListPage, PopularPage, TVPage } from './contentPages';
 import { Header } from './components';
+import { useAuthContext } from './auth/AuthProvider';
 
 
 export const ContentRoutes = () => {
+
+	const { isLoading } = useAuthContext();
+
 	return (
 		<Container>
-			<Header />
+			{!isLoading && <Header />}
 			<Routes>
 				<Route path='/' element={<Protected><MoviesPage /></Protected>} />
 				<Route path='tv' element={<Protected><TVPage /></Protected>} />

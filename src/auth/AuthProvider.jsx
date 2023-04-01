@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState({})
   const [loginError, setLoginError] = useState(false);
   const [registerError, setRegisterError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const createUser = async (email, password) => {
     let storage = JSON.parse(localStorage.getItem('users'));
@@ -55,11 +56,14 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => setUser(currentUser))
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setIsLoading(false);
+    });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ createUser, login, logout, user, loginError, registerError }}>
+    <AuthContext.Provider value={{ createUser, login, logout, user, loginError, registerError, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
