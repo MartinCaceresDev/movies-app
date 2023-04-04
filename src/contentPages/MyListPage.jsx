@@ -9,7 +9,7 @@ export function MyListPage() {
 		<>
 			<Featured page={page} />
 
-			<List listTitle=	{{name: page, id: null}} page={page} /> 
+			<List listTitle={{ name: page, id: null }} page={page} />
 
 		</>
 	);

@@ -2,6 +2,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import { movieGenres, tvGenres } from '../utils/links';
 
+/**
+ * 
+ * @returns {[{ fetchedGenres: {name: string; id: string | null}[]; pending: boolean; error: any }, function]} - Returns array with two arguments:
+ * First one is an object with three properties: "fetchedGenres" array of objects, pending (boolean) and error.
+ * Second one is a function to fetch genres.
+ */
+
 export const useFetchGenres = () => {
 	const [fetchedGenres, setFetchedGenresState] = useState(false);
 	const [pending, setPending] = useState(true);

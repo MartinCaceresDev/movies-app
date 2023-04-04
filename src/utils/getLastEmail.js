@@ -1,3 +1,8 @@
+/**
+ * 
+ * @returns { String } String - Checks in local storage and returns the last email used for login.
+ */
+
 export const getLastEmail = () => {
 	let storage;
 	try {

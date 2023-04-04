@@ -1,3 +1,9 @@
+/**
+ * 
+ * @param {Number} viewWidth - (Number) Receives the viewwidth.
+ * @param {Function} setMaxSlideNumber - (Function) Receives the function to update the maxSlideNumber in state.
+ */
+
 export const checkViewWidth = (viewWidth, setMaxSlideNumber) => {
 	if (viewWidth > 1281) {
 		setMaxSlideNumber(3);

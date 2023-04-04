@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ * 
+ * @param {string[]} linksArray - (string[]) Receives an array of content url to fetch.
+ * @returns {Promise<object[]>} Array - Returns an array of content objects.
+ */
+
 export const fetchItems = async (linksArray = []) => {
 	const results = [];
 	let counter = 0;

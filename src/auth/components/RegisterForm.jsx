@@ -17,7 +17,7 @@ export const RegisterForm = () => {
 	const emailInput = useRef();
 	const passwordInput = useRef();
 
-	const updateLabels = (e) => {
+	const updateErrorMsg = (e) => {
 		if ((e?.type === 'blur' && e.target.id === 'email' && !email) || (e?.type === 'focus' && e.target.id === 'email')) {
 			setEmailMessage(false);
 		}
@@ -66,8 +66,8 @@ export const RegisterForm = () => {
 					value={email}
 					onChange={(e) => setEmail(e.target.value)}
 					id='email'
-					onFocus={updateLabels}
-					onBlur={updateLabels}
+					onFocus={updateErrorMsg}
+					onBlur={updateErrorMsg}
 					ref={emailInput}
 					autoComplete='off'
 				/>
@@ -88,8 +88,8 @@ export const RegisterForm = () => {
 					onChange={(e) => setPassword(e.target.value)}
 					value={password}
 					id='password'
-					onFocus={updateLabels}
-					onBlur={updateLabels}
+					onFocus={updateErrorMsg}
+					onBlur={updateErrorMsg}
 					ref={passwordInput}
 				/>
 				<label ref={passwordLabelRef} htmlFor='password'>Password</label>

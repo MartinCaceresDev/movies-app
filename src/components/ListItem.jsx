@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import { Trailer } from './Trailer';
 import { GetContext } from '../context/AppContextContainer';
+import { checkAddedToList, onAddRemoveFromList } from '../utils';
 
 const imgURL = 'https://image.tmdb.org/t/p/w500';
 
@@ -26,14 +27,19 @@ export const ListItem = memo(({
 	const [addedToList, setAddedToList] = useState(false);
 	const [trailerOpen, setTrailerOpen] = useState(false);
 	const image = `${imgURL}${backdrop_path}`
-	const { checkAddedToList, storageUpdated, onAddRemoveFromList } = GetContext();
+	const { storageUpdated, setStorageUpdated } = GetContext();
 
-	// CHECK IF ITEM IS ADDED
+	// checks if item is added to user list
 	useEffect(() => {
 		setAddedToList(() => checkAddedToList(id));
 	}, [storageUpdated]);
 
+	// handles added to user list click
 	const argumentsNeeded = [addedToList, page, id, runtime, number_of_seasons];
+	const onAddedClick = () => {
+		onAddRemoveFromList(...argumentsNeeded);
+		setStorageUpdated(storageUpdated + 1)
+	};
 
 	return (
 		<>
@@ -46,6 +52,7 @@ export const ListItem = memo(({
 					<Image src={image} alt='Movie' />
 					<Title>{title ? title : name}</Title>
 
+					{/* on item hovered */}
 					{isHovered && (
 						<HoverContainer>
 
@@ -61,11 +68,11 @@ export const ListItem = memo(({
 									{addedToList
 										? <PlaylistAddCheckOutlinedIcon
 											className='icon'
-											onClick={() => onAddRemoveFromList(...argumentsNeeded)}
+											onClick={onAddedClick}
 										/>
 										: <AddIcon
 											className='icon'
-											onClick={() => onAddRemoveFromList(...argumentsNeeded)}
+											onClick={onAddedClick}
 										/>
 									}
 								</Icons>

@@ -33,6 +33,7 @@ export const List = ({ listTitle, page }) => {
 		});
 	}
 
+	// number of slides shown depends on viewport width
 	useEffect(() => {
 		const updateViewWidth = () => setViewWidth(window.innerWidth);
 		window.addEventListener('resize', updateViewWidth);
@@ -40,10 +41,12 @@ export const List = ({ listTitle, page }) => {
 		return () => window.removeEventListener('resize', updateViewWidth);
 	});
 
+	// Query contents data
 	useEffect(() => {
 		getStorageMyList(listTitle, page, setFetchedData);
 	}, [storageUpdated]);
 
+	// with contents data prepare lists to render
 	const itemsToRender = () => {
 		if (itemsList) {
 			const items = itemsList.map(item => {
@@ -58,12 +61,17 @@ export const List = ({ listTitle, page }) => {
 		}
 	}
 
+	// if contents data changes update lists to render
 	useEffect(() => {
 		itemsToRender();
 	}, [itemsList])
 
 	return (
 		<>
+			{/* Pending */}
+			{(!itemsList?.length && pending) && <LoadingList />}
+
+			{/* Empty */}
 			{(!itemsList?.length & !pending)
 				? <EmptyContainer>
 					<EmptyListTitle>Your list is empty.</EmptyListTitle>
@@ -71,8 +79,7 @@ export const List = ({ listTitle, page }) => {
 				: <></>
 			}
 
-			{(!itemsList?.length && pending) && <LoadingList />}
-
+			{/* Render items */}
 			{itemsList?.length && (
 				<Container page={page}>
 					<ListTitle>{listTitle.name}</ListTitle>

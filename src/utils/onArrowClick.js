@@ -1,3 +1,17 @@
+/**
+ * 
+ * @param {String} direction - (String) Left or right.
+ * @param {{
+ * leftArrow: React.MutableRefObject; 
+ * rightArrow: React.MutableRefObject; 
+ * listRef: React.MutableRefObject; 
+ * slideNumber: number; 
+ * viewWidth: number; 
+ * setSlideNumber: function; 
+ * maxSlideNumber: number;
+ * }} params - Receives arguments needed to update number of slides and position as viewport width changes.
+ */
+
 export const onArrowClick = (
 	direction,
 	{

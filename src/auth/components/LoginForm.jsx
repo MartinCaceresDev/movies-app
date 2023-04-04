@@ -27,7 +27,7 @@ export const LoginForm = () => {
     invalidBorders();
   }, [emailMessage, passwordMessage]);
 
-  const updateLabels = (e) => {
+  const updateErrorMsg = (e) => {
     if ((e?.type === 'blur' && e.target.id === 'email' && !email) || (e?.type === 'focus' && e.target.id === 'email')) {
       setEmailMessage(false);
     }
@@ -37,12 +37,12 @@ export const LoginForm = () => {
   }
 
   useEffect(() => {
-    setEmail(getLastEmail());
-  }, []);
+    updateErrorMsg();
+  }, [email])
 
   useEffect(() => {
-    updateLabels();
-  }, [email])
+    setEmail(getLastEmail());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,8 +83,8 @@ export const LoginForm = () => {
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
-          onFocus={updateLabels}
-          onBlur={updateLabels}
+          onFocus={updateErrorMsg}
+          onBlur={updateErrorMsg}
           autoComplete='off'
         />
         <label ref={emailLabelRef} htmlFor='email'>Email</label>
@@ -100,8 +100,8 @@ export const LoginForm = () => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
-          onFocus={updateLabels}
-          onBlur={updateLabels}
+          onFocus={updateErrorMsg}
+          onBlur={updateErrorMsg}
         />
         <label ref={passwordLabelRef} htmlFor='password'>Password</label>
 

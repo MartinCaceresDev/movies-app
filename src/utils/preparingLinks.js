@@ -1,4 +1,12 @@
-import * as link from '../utils/links';
+import * as link from './links';
+
+/**
+ * 
+ * @param {String} page - (String) Name of the page.
+ * @param {{name: string; id: string}} listObject - Object with two properties: 'name' (string) and 'id' (string) (optional).
+ * @param {{ids: string[]} | string[]} ids - Page === 'My List' ? string[] : { ids: string[] }
+ * @returns { Promise<string[]> } - (string[]) Returns an array of urls to fetch.
+ */
 
 export const preparingLinks = (page, listObject, ids) => {
 	let linksToFetch = [];

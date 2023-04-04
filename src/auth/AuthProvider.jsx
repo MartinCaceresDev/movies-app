@@ -55,6 +55,7 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // If page reloads we recover user
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);

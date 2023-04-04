@@ -1,4 +1,10 @@
-import { getLastEmail } from './';
+import { getLastEmail } from '.';
+
+/**
+ * 
+ * @param {String} email - (String) Present user email.
+ * @param {object[]} storage - object[] Local storage
+ */
 
 export const updateStorage = (email, storage) => {
 	if (email !== getLastEmail() && storage) {

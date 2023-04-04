@@ -13,3 +13,5 @@ export * from './removeFromStorage';
 export * from './customListTitles';
 export * from './getLastEmail';
 export * from './updateStorage';
+export * from './onAddRemoveFromList';
+export * from './checkAddedToList';

@@ -1,9 +1,9 @@
 /**
  *
- * @param {String} page
- * @param {String} id
- * @param {String} runtime - If this is truthy it indicates the content is a movie.
- * @param {String} number_of_seasons  - If this is truthy it indicates the content is a tv show.
+ * @param {String} page - (string) Name of the page
+ * @param {String} id - (string) The id of the movie or series.
+ * @param {String} runtime - (truthy of falsy) If truthy it is a movie.
+ * @param {String} number_of_seasons  - (truthy of falsy) If truthy it is a tv show.
  */
 
 export const addToStorage = (page, id, runtime, number_of_seasons) => {

@@ -16,11 +16,13 @@ export function Featured({ page }) {
 	const [infoOpen, setInfoOpen] = useState(false);
 	const [{ fetchedData, pending }, setFetchedData] = useFetchContents();
 
+	// Query content data
 	useEffect(() => {
 		setFetchedData(page, { name: 'Featured' });
 		setInfoOpen(false);
 	}, [page]);
 
+	// with content data we may have logo and trailer video
 	useEffect(() => {
 		if (fetchedData && fetchedData[0]?.images?.logos[0]?.file_path) {
 			setLogo(`${logoURL}${fetchedData[0]?.images?.logos[0]?.file_path}`);
@@ -64,11 +66,12 @@ export function Featured({ page }) {
 
 							</Buttons>
 						</>
+						// When info is open
 						: <FeaturedInfo video={video} fetchedData={fetchedData} page={page} />
 				}
 
 			</Info>
-
+			{/* Trailer video is open */}
 			{trailerOpen && <Trailer video={video} setTrailerOpen={setTrailerOpen} />}
 
 		</Container>

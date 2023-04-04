@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import { Trailer } from '.';
-import { getCredits } from '../utils';
+import { checkAddedToList, getCredits, onAddRemoveFromList } from '../utils';
 import { GetContext } from '../context/AppContextContainer';
 
 
@@ -14,7 +14,7 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
   const [addedToList, setAddedToList] = useState(false);
   const [cast, setCast] = useState(null);
 
-  const { checkAddedToList, storageUpdated, onAddRemoveFromList } = GetContext()
+  const { storageUpdated, setStorageUpdated } = GetContext();
 
   const {
     id,
@@ -27,12 +27,14 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
     genres
   } = fetchedData[0];
 
+  // get type of content
   const type = () => {
     if (runtime) return 'movie';
     if (number_of_seasons) return 'TV';
     else console.log('There is no type of content.');
   };
 
+  // with type of content we get credits of featured movie
   useEffect(() => {
     const contentType = type();
     if (contentType) {
@@ -42,10 +44,12 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
     }
   }, [])
 
+  // is content added to user list?
   useEffect(() => {
     setAddedToList(() => checkAddedToList(id))
   }, [storageUpdated])
 
+  // Date of content (is it movie or tv show?)
   const date = () => {
     if (release_date) {
       return release_date.slice(0, 4);
@@ -54,9 +58,15 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
     } else return null;
   };
 
+  // we get main three actors/actresses
   const starring = cast && cast.slice(0, 3).map(actor => actor.name).join(', ');
 
   const genre = genres.map(genre => genre.name).join(', ');
+
+  const onMyListClick = () => {
+    onAddRemoveFromList(addedToList, page, id, runtime, number_of_seasons);
+    setStorageUpdated(storageUpdated + 1);
+  };
 
   return (
     <>
@@ -85,7 +95,7 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
 
         {trailerOpen && <Trailer setTrailerOpen={setTrailerOpen} video={video} />}
 
-        <ButtonList onClick={() => onAddRemoveFromList(addedToList, page, id, runtime, number_of_seasons)}>
+        <ButtonList onClick={onMyListClick}>
           {!addedToList
             ? <>
               <AddIcon />

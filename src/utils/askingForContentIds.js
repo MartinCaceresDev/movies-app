@@ -1,9 +1,15 @@
 import axios from 'axios';
-import * as link from '../utils/links';
+import * as link from './links';
 
-export const askingForContentIds = async (page, listObject) => {
+/**
+ * @param {String} page - (string) Name of the page.
+ * @param {{name: string; id: string}} listDetails - (object) List name and id.
+ * @returns {Promise<string[]>} ids - (array) Returns an array of content ids.
+ */
+
+export const askingForContentIds = async (page, listDetails) => {
 	let ids = false;
-	switch (listObject.name) {
+	switch (listDetails.name) {
 		case 'Trending Now':
 		case 'Featured':
 			if (page === 'Movies' || page === 'New & Popular' || page === 'My List') {
@@ -30,14 +36,16 @@ export const askingForContentIds = async (page, listObject) => {
 			}
 		default:
 			if (page === 'Movies') {
-				ids = await fetchItemsId(`${link.byGenderMovies}${listObject.id}`);
+				ids = await fetchItemsId(`${link.byGenderMovies}${listDetails.id}`);
 			} else if (page === 'TV') {
-				ids = await fetchItemsId(`${link.byGenderTV}${listObject.id}`);
+				ids = await fetchItemsId(`${link.byGenderTV}${listDetails.id}`);
 			}
 	}
 	return ids;
 };
 
+
+// Receives the url, fetches the proper ids and returns them in an array.
 const fetchItemsId = async (url) => {
 	try {
 		let items = await axios.get(url);

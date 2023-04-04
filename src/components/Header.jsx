@@ -15,7 +15,7 @@ export function Header() {
 	const [menuOpen, setMenuOpen] = useState(false);
 	const navigate = useNavigate();
 
-
+	// header style depends on scroll
 	useEffect(() => {
 		const updateScroll = () => {
 			const scroll = window.pageYOffset;
@@ -25,6 +25,7 @@ export function Header() {
 		return () => window.removeEventListener('scroll', updateScroll);
 	});
 
+	// navigate to page after due click
 	const handleMenuPage = (e) => {
 		switch (e.target.innerText) {
 			case 'Movies':
@@ -45,6 +46,7 @@ export function Header() {
 		}
 	};
 
+	// show or hide sidebar
 	const onMenuClick = ({ target: { id } }) => {
 		if (id === 'openIcon') setMenuOpen(true);
 		else if (id === 'closeIcon') setMenuOpen(false);
@@ -79,6 +81,7 @@ export function Header() {
 
 				</RightMenu>
 
+				{/* Shown only if width is larger than 900px */}
 				<HamburgerMenu>
 					<AiOutlineMenu onClick={onMenuClick} id='openIcon' />
 				</HamburgerMenu>
