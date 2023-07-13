@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { useAuthContext } from '../AuthProvider';
-import { getLastEmail } from '../../utils'
+import { getLastEmail } from '../../utils';
 
 
 export const LoginForm = () => {
@@ -19,9 +19,11 @@ export const LoginForm = () => {
   const passwordLabelRef = useRef();
 
   const invalidBorders = () => {
-    emailRef.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none';
-    passwordRef.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none';
-  }
+    // emailRef.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none';
+    // passwordRef.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none';
+    emailRef.current.style.borderBottom = emailMessage && '2px solid #FFA00A';
+    passwordRef.current.style.borderBottom = passwordMessage && '2px solid #FFA00A';
+  };
 
   useEffect(() => {
     invalidBorders();
@@ -34,11 +36,11 @@ export const LoginForm = () => {
     if ((e?.type === 'focus' && e.target.id === 'email') || (e?.type === 'focus' && e.target.id === 'password')) {
       setPasswordMessage(false);
     }
-  }
+  };
 
   useEffect(() => {
     updateErrorMsg();
-  }, [email])
+  }, [email]);
 
   useEffect(() => {
     setEmail(getLastEmail());
@@ -68,11 +70,12 @@ export const LoginForm = () => {
       <h1>Sign In</h1>
 
       {loginError
-        && (<Error>
-          <p>Sorry, email or password are incorrect.
-            Please try again or <Link to='/register'>create a new account</Link>.
-          </p>
-        </Error>
+        && (
+          <Error>
+            <p>Sorry, email or password are incorrect.
+              Please try again or <Link to='/register'>create a new account</Link>.
+            </p>
+          </Error>
         )
       }
 
@@ -117,8 +120,8 @@ export const LoginForm = () => {
         This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href='#'>Learn more</a>.
       </Captcha>
     </Form>
-  )
-}
+  );
+};
 
 
 

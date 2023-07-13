@@ -27,9 +27,9 @@ export const RegisterForm = () => {
 	};
 
 	const invalidBorders = () => {
-		emailInput.current.style.borderBottom = emailMessage ? '2px solid #FFA00A' : 'none';
-		passwordInput.current.style.borderBottom = passwordMessage ? '2px solid #FFA00A' : 'none';
-	}
+		emailInput.current.style.borderBottom = emailMessage && '2px solid #FFA00A';
+		passwordInput.current.style.borderBottom = passwordMessage && '2px solid #FFA00A';
+	};
 
 	useEffect(() => {
 		invalidBorders();
@@ -102,8 +102,8 @@ export const RegisterForm = () => {
 				<span>Get Started</span><ArrowForwardIosOutlinedIcon />
 			</RegisterButton>
 		</Form>
-	)
-}
+	);
+};
 
 
 

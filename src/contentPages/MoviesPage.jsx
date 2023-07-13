@@ -1,23 +1,20 @@
-import { useEffect } from 'react';
-import { useFetchGenres } from '../hooks/useFetchGenres';
 import { Featured, List } from '../components';
-import { customListsTitles } from '../utils'
+import { customListsTitles } from '../utils';
+import { useGetGenres } from '../hooks/useGetGenres';
+
+const page = 'Movies';
 
 
 export function MoviesPage() {
-	const [ { fetchedGenres: fetchedMovieGenres }, setFetchedMovieGenres ] = useFetchGenres();
-	const page = 'Movies';
 
-	useEffect(()=>{
-		setFetchedMovieGenres('MovieGenres');
-	},[]);
+	const { genres, error, isLoading } = useGetGenres(page);
 
 	return (
 		<>
 			<Featured page={page} />
-			
-			{ customListsTitles.map((title)=> <List key={title.name} page={page} listTitle={title} />) }
-			{ fetchedMovieGenres && fetchedMovieGenres.map((title)=> <List key={title.name} page={page} listTitle={title} />)}
+
+			{customListsTitles.map((title) => <List key={title.name} page={page} listTitle={title} />)}
+			{genres && genres.map((title) => <List key={title.name} page={page} listTitle={title} />)}
 
 		</>
 	);

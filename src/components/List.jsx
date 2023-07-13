@@ -3,13 +3,12 @@ import styled, { css } from 'styled-components';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import { ListItem } from './ListItem';
-import { useFetchContents } from '../hooks/useFetchContents'
 import { LoadingList } from './';
-import { onArrowClick, checkViewWidth, getStorageMyList } from '../utils';
-import { GetContext } from '../context/AppContextContainer';
+import { onArrowClick, checkViewWidth } from '../utils';
+import { useGetContent } from '../hooks/useGetContent';
 
 
-export const List = ({ listTitle, page }) => {
+export const List = ({ page, listTitle }) => {
 
 	const [slideNumber, setSlideNumber] = useState(0);
 	const [viewWidth, setViewWidth] = useState(window.innerWidth);
@@ -18,8 +17,8 @@ export const List = ({ listTitle, page }) => {
 	const leftArrow = useRef();
 	const rightArrow = useRef();
 
-	const [{ fetchedData: itemsList, pending }, setFetchedData] = useFetchContents();
-	const { storageUpdated } = GetContext();
+	const { itemsList, error, isLoading } = useGetContent(page, listTitle);
+
 
 	const arrowClick = (direction) => {
 		onArrowClick(direction, {
@@ -31,7 +30,7 @@ export const List = ({ listTitle, page }) => {
 			setSlideNumber,
 			maxSlideNumber
 		});
-	}
+	};
 
 	// number of slides shown depends on viewport width
 	useEffect(() => {
@@ -41,11 +40,6 @@ export const List = ({ listTitle, page }) => {
 		return () => window.removeEventListener('resize', updateViewWidth);
 	});
 
-	// Query contents data
-	useEffect(() => {
-		getStorageMyList(listTitle, page, setFetchedData);
-	}, [storageUpdated]);
-
 	// with contents data prepare lists to render
 	const itemsToRender = () => {
 		if (itemsList) {
@@ -54,25 +48,25 @@ export const List = ({ listTitle, page }) => {
 					...item,
 					genres: item.genres?.length ? item.genres[0].name : null,
 					videos: item.videos?.results?.find(video => video.type === 'Trailer')?.key
-				}
-				return <ListItem key={item.id} page={page} {...data} />
-			})
+				};
+				return <ListItem key={item.id} page={page} {...data} />;
+			});
 			return items;
 		}
-	}
+	};
 
 	// if contents data changes update lists to render
 	useEffect(() => {
 		itemsToRender();
-	}, [itemsList])
+	}, [itemsList]);
 
 	return (
 		<>
 			{/* Pending */}
-			{(!itemsList?.length && pending) && <LoadingList />}
+			{(!itemsList?.length && isLoading) && <LoadingList />}
 
 			{/* Empty */}
-			{(!itemsList?.length & !pending)
+			{(!itemsList?.length & !isLoading)
 				? <EmptyContainer>
 					<EmptyListTitle>Your list is empty.</EmptyListTitle>
 				</EmptyContainer>
@@ -114,8 +108,8 @@ export const List = ({ listTitle, page }) => {
 			)
 			}
 		</>
-	)
-}
+	);
+};
 
 
 // STYLES

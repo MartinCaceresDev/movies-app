@@ -8,8 +8,8 @@ export function PopularPage() {
 	return (
 		<>
 			<Featured page={page} />
-        
-			<List listTitle= {{name: 'Popular', id: null}} page={page} />
+
+			<List listTitle={{ name: 'Popular', id: null }} page={page} />
 
 		</>
 	);

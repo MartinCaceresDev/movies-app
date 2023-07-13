@@ -1,25 +1,21 @@
-
-import { useEffect } from 'react';
-import { useFetchGenres } from '../hooks/useFetchGenres';
 import { Featured, List } from '../components';
-import { customListsTitles } from '../utils'
+import { useGetGenres } from '../hooks/useGetGenres';
+import { customListsTitles } from '../utils';
+
+const page = 'TV';
 
 
 export function TVPage() {
-	const [ { fetchedGenres: fetchedTVGenres }, setFetchedTVGenres ] = useFetchGenres();
-	const page = 'TV';
 
-	useEffect(()=>{
-		setFetchedTVGenres('TVGenres');
-	},[]);
+	const { genres, error, isLoading } = useGetGenres(page);
 
 	return (
 		<>
 			<Featured page={page} />
-			
-			{ customListsTitles.map((title)=> <List key={title.name} page={page} listTitle={title} />) }
-			{ fetchedTVGenres && fetchedTVGenres.map((title)=> <List key={title.name} page={page} listTitle={title} />) }
-				
+
+			{customListsTitles.map((title) => <List key={title.name} page={page} listTitle={title} />)}
+			{genres && genres.map((title) => <List key={title.name} page={page} listTitle={title} />)}
+
 		</>
 	);
 }

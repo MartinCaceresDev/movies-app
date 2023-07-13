@@ -40,25 +40,23 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
     if (contentType) {
       getCredits(id, contentType)
         .then(castList => setCast(castList))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
     }
-  }, [])
+  }, []);
 
   // is content added to user list?
   useEffect(() => {
-    setAddedToList(() => checkAddedToList(id))
-  }, [storageUpdated])
+    setAddedToList(() => checkAddedToList(id));
+  }, [storageUpdated]);
 
   // Date of content (is it movie or tv show?)
   const date = () => {
-    if (release_date) {
-      return release_date.slice(0, 4);
-    } else if (first_air_date) {
-      return first_air_date.slice(0, 4);
-    } else return null;
+    if (release_date) return release_date.slice(0, 4);
+    else if (first_air_date) return first_air_date.slice(0, 4);
+    else return null;
   };
 
-  // we get main three actors/actresses
+  // we get three main actors/actresses
   const starring = cast && cast.slice(0, 3).map(actor => actor.name).join(', ');
 
   const genre = genres.map(genre => genre.name).join(', ');
@@ -119,8 +117,8 @@ export const FeaturedInfo = ({ video, fetchedData, page }) => {
         {genre}
       </Genres>
     </>
-  )
-}
+  );
+};
 
 
 // STYLES

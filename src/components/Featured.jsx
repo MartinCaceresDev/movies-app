@@ -2,23 +2,26 @@ import { useState, useEffect } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import styled from 'styled-components';
-import { Spinner } from '@chakra-ui/react'
-import { useFetchContents } from '../hooks/useFetchContents'
+import { Spinner } from '@chakra-ui/react';
 import { Trailer, FeaturedInfo } from './';
+import { useGetContent } from '../hooks/useGetContent';
 
 const imgURL = 'https://image.tmdb.org/t/p/original';
 const logoURL = 'https://image.tmdb.org/t/p/w500';
+
+const listTitle = { name: 'Featured' };
+
 
 export function Featured({ page }) {
 	const [logo, setLogo] = useState('');
 	const [video, setVideo] = useState('');
 	const [trailerOpen, setTrailerOpen] = useState(false);
 	const [infoOpen, setInfoOpen] = useState(false);
-	const [{ fetchedData, pending }, setFetchedData] = useFetchContents();
+
+	const { itemsList: fetchedData, error, isLoading } = useGetContent(page, listTitle);
 
 	// Query content data
 	useEffect(() => {
-		setFetchedData(page, { name: 'Featured' });
 		setInfoOpen(false);
 	}, [page]);
 
@@ -32,12 +35,12 @@ export function Featured({ page }) {
 		}
 	}, [fetchedData]);
 
-	if (pending) {
+	if (isLoading) {
 		return (
 			<Loading>
 				<Spinner color='red.500' size='lg' />
 			</Loading>
-		)
+		);
 	}
 
 	return (

@@ -15,3 +15,4 @@ export const topRatedTVShows = `https://api.themoviedb.org/3/tv/top_rated?api_ke
 export const byGenderTV = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&with_genres=`;
 export const tvShowBeforeID = `https://api.themoviedb.org/3/tv/`;
 export const tvShowAfterID = `?api_key=${API_KEY}&append_to_response=videos,images`;
+

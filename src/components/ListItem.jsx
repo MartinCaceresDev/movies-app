@@ -38,7 +38,7 @@ export const ListItem = memo(({
 	const argumentsNeeded = [addedToList, page, id, runtime, number_of_seasons];
 	const onAddedClick = () => {
 		onAddRemoveFromList(...argumentsNeeded);
-		setStorageUpdated(storageUpdated + 1)
+		setStorageUpdated(prev => prev + 1)
 	};
 
 	return (

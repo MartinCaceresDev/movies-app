@@ -17,10 +17,7 @@ export function Header() {
 
 	// header style depends on scroll
 	useEffect(() => {
-		const updateScroll = () => {
-			const scroll = window.pageYOffset;
-			scroll > 0 ? setIsScrolled(true) : setIsScrolled(false);
-		};
+		const updateScroll = () => window.scrollY > 0 ? setIsScrolled(true) : setIsScrolled(false);
 		window.addEventListener('scroll', updateScroll);
 		return () => window.removeEventListener('scroll', updateScroll);
 	});
@@ -28,12 +25,14 @@ export function Header() {
 	// navigate to page after due click
 	const handleMenuPage = (e) => {
 		switch (e.target.innerText) {
-			case 'Movies':
 			case 'Home':
 				navigate('/');
 				break;
 			case 'TV Shows':
 				navigate('/tv');
+				break;
+			case 'Movies':
+				navigate('/movies');
 				break;
 			case 'New & Popular':
 				navigate('/popular');
