@@ -16,7 +16,6 @@ export const preparingLinks = (page, listObject, ids) => {
 		linksToFetch = ids.ids?.map((id) => `${link.tvShowBeforeID}${id}${link.tvShowAfterID}`);
 	} else if (page === 'My List') {
 		if(listObject.name === 'Featured') {
-			console.log('ids', ids)
 			linksToFetch = ids.ids?.map((id) => `${link.movieBeforeMovieID}${id}${link.movieAfterMovieID}`);
 		} else {
 			let moviesLinks = ids.movies?.map((id) => `${link.movieBeforeMovieID}${id}${link.movieAfterMovieID}`);
